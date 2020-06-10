@@ -4,9 +4,14 @@ import Navbar from "./navbar/navbar";
 
 import Drawer from "./navbar/drawer";
 
+import Footer from "./footer";
+
 import MediaQuery from "react-responsive";
 
-import theme from "../../theme";
+import {
+    breakpoints
+} 
+from "../../theme";
 
 import { 
     ThemeProvider
@@ -23,15 +28,30 @@ import {
 }
 from "./navbar/items";
 
+import {
+    Grid,
+    Box
+}
+from "./grid";
+
 import Section from "./section";
 
 
 
 interface ILayoutProps extends Pick<IItemsProps, "items"> {
-    children: React.ReactElement<typeof Section>
+    children: (
+        React.ReactElement<typeof Section>
+        | React.ReactElement<typeof Section>[]
+    );
 };
 
-const Layout: React.FC<ILayoutProps> & { Section: typeof Section } = props => {
+type LayoutType = React.FC<ILayoutProps> & { 
+    Section: typeof Section;
+    Grid: typeof Grid;
+    Box: typeof Box;
+};
+
+const Layout: LayoutType = props => {
 
     const {
         hash
@@ -42,7 +62,7 @@ const Layout: React.FC<ILayoutProps> & { Section: typeof Section } = props => {
     const toggleDrawerHandler = () => setIsDrawerOpen(prevValue => !prevValue);
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={{ breakpoints }}>
             <Navbar
             color="blue" 
             onDrawerButtonClick={toggleDrawerHandler}
@@ -50,7 +70,7 @@ const Layout: React.FC<ILayoutProps> & { Section: typeof Section } = props => {
             items={props.items}/>
 
             <MediaQuery 
-            maxWidth={theme.breakpoints.md}>
+            maxWidth={breakpoints.md}>
                 
                 <Drawer
                 color="dark"
@@ -61,10 +81,16 @@ const Layout: React.FC<ILayoutProps> & { Section: typeof Section } = props => {
             </MediaQuery>
 
             {props.children}
+
+            <Footer color="blue"/>
         </ThemeProvider>
     );
 }
 
 Layout.Section = Section;
+
+Layout.Grid = Grid;
+
+Layout.Box = Box;
 
 export default Layout;

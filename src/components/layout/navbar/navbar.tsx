@@ -15,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { up, down } from "styled-breakpoints";
 
 import { 
-    IComponentTheme 
+    IColorTheme 
 }
 from "../../../types";
 
@@ -50,14 +50,28 @@ import Items, {
 from "./items";
 
 // @ts-ignore
-import logoUrl from "../../../images/logo.svg";
+import logoLightUrl from "../../../images/logo_light.svg";
+
+// @ts-ignore
+import logoBlueUrl from "../../../images/logo_blue.svg";
 
 
 
-const Container = styled.nav<IComponentTheme>(props => {
+const getLogoUrl = (theme: IColorTheme["color"]) => {
+    switch(theme) {
+        case "dark":
+        case "blue":
+            return logoLightUrl;
+
+        case "light":
+            return logoBlueUrl;
+    }
+}
+
+const Container = styled.nav<IColorTheme>(props => {
     
     const componentThemeColors = {
-        dark: colors.grayDark,
+        dark: colors.black,
         light: colors.silverLight,
         blue: colors.blueDefault
     }
@@ -83,7 +97,7 @@ const Container = styled.nav<IComponentTheme>(props => {
     }
 });
 
-interface INavbarProps extends IItemsProps, IComponentTheme {
+interface INavbarProps extends IItemsProps, IColorTheme {
     onDrawerButtonClick: () => void;
 }
 
@@ -133,7 +147,7 @@ const Navbar: React.FC<INavbarProps> = props => {
                     <Margin ml="s6" >
                         <Image 
                         width={28}
-                        src={logoUrl}/>
+                        src={getLogoUrl(props.color)}/>
                     </Margin>
                     
                     {c && 

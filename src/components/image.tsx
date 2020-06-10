@@ -1,17 +1,23 @@
 import React from "react";
 
-import styled from "styled-components";
+import styled, {
+    CSSObject
+} 
+from "styled-components";
 
 
 
 interface IImageContainerProps {
-    width?: number
+    width?: number;
+    round?: boolean;
 }
 
 const ImageContainer = styled.div<IImageContainerProps>(props => ({
     width: "100%",
-    maxWidth: props.width ?? 32,
+    maxWidth: props.width ?? 128,
+    borderRadius: props.round ? 12 : 0,
     overflow: "hidden",
+    margin: "auto",
     "& > img": {
         display: "block",
         width: "100%"
@@ -20,12 +26,18 @@ const ImageContainer = styled.div<IImageContainerProps>(props => ({
 
 interface IImageProps extends IImageContainerProps{
     src: string;
+    round?: true;
 }
 
-const Image: React.FC<IImageProps> = props => (
-    <ImageContainer width={props.width}>
-        <img src={props.src}/>
-    </ImageContainer>
-);
+const Image: React.FC<IImageProps> = props => {
+    return (
+        <ImageContainer 
+        round={props.round}
+        width={props.width}>
+            <img 
+            src={props.src}/>
+        </ImageContainer>
+    );
+};
 
 export default Image;

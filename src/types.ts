@@ -3,13 +3,25 @@ import {
 } 
 from "./theme";
 
-export type SpacingMetric = (
+import {
+    breakpoints
+}
+from "./theme";
+
+
+
+export type LayoutSpacing = (
+    "l1" | "l2" | "l3" |
+    "l4" | "l5" | "l6" | "l7"
+);
+
+export type MicroSpacing = (
     "s1" | "s2" | "s3" | "s4" |
     "s5" | "s6" | "s7" | "s8" |
-    "s9" | "l1" | "l2" | "l3" |
-    "l4" | "l5" | "l6" | "l7" | 
-    "auto"
+    "s9"
 );
+
+export type SpacingMetric = MicroSpacing | LayoutSpacing | "auto";
 
 export type Colors = keyof typeof colors;
 
@@ -31,10 +43,12 @@ export interface IColorProps {
 
     rotate?: number;
     alpha?: number;
-}
+};
 
-export type ComponentTheme = "dark" | "light" | "blue";
-
-export interface IComponentTheme {
+export interface IColorTheme {
     color: "dark" | "light" | "blue";
-}
+};
+
+export interface ISizeTheme {
+    size?: "xl" | "lg" | "md" | "sm" | "xs";
+};

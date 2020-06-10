@@ -18,13 +18,13 @@ import {
 from "../../../utilities";
 
 import {
-    IComponentTheme
+    IColorTheme
 }
 from "../../../types";
 
 
 
-interface IItemProps extends IComponentTheme {
+interface IItemProps extends IColorTheme {
     index: number;
     active: boolean;
 }
@@ -65,16 +65,10 @@ const Item = styled.a<IItemProps>(props => {
         display: "block",
         textDecoration: "none",
         color,
-        backgroundColor,
         textTransform: "capitalize",
+        backgroundColor,
         letterSpacing: 1.6,
         ...defaultTransition,
-        "& > *::before": {
-            letterSpacing: 1.6,
-            content: `"${props.index}."`,
-            color,
-            ...defaultTransition,
-        },
         "&:hover": {
             "& > *::before": {
                 color: "inherit",
@@ -88,7 +82,7 @@ const Item = styled.a<IItemProps>(props => {
     };
 });
 
-export interface IItemsProps extends IComponentTheme {
+export interface IItemsProps extends IColorTheme {
     items: string[];
     active: string;
     onClick?: () => void;

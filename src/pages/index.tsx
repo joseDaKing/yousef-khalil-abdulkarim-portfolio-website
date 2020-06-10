@@ -9,6 +9,8 @@ from "styled-components";
 
 import Layout from "../components/layout";
 
+import * as sections from "../sections/";
+
 
 
 const GlobalStyles = createGlobalStyle({
@@ -28,14 +30,14 @@ const IndexPage = () => {
     return (
         <React.Fragment>
             <GlobalStyles/>
+
             <Layout
             items={pages}>
-                <Layout.Section 
-                color="dark"
-                title="about"
-                name="about">
-
-                </Layout.Section>
+                {Object
+                .values(sections).map(
+                    (Section, index) => 
+                        <Section key={index}/>
+                )}
             </Layout>
         </React.Fragment>
     );

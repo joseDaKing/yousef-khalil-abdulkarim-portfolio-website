@@ -21,7 +21,7 @@ import {
 from "../typography";
 
 import {
-    IComponentTheme
+    IColorTheme
 }
 from "../../types";
 
@@ -31,6 +31,11 @@ import {
 from "../../theme"
 
 import Color from "color";
+
+import {
+    Grid
+}
+from "./grid";
 
 
 
@@ -48,7 +53,7 @@ const Content = styled.div(props => ({
     margin: "auto"
 }));
 
-const TitleMargin = styled(Margin)<IComponentTheme>(props => {
+const TitleMargin = styled(Margin)<IColorTheme>(props => {
 
     const theme = {
         dark: colors.silverLight,
@@ -57,18 +62,14 @@ const TitleMargin = styled(Margin)<IComponentTheme>(props => {
     }
 
     const color = theme[props.color];
-
-    const pseudoElementBaseStyles = {
+    
+    const pseudoElementStyles = {
         content: `""`,
         display: "block",
         paddingTop: 1,
         paddingBottom: 1,
         paddingLeft: 5,
-        paddingRight: 5
-    }
-
-    const pseudoElementStyles = {
-        ...pseudoElementBaseStyles,
+        paddingRight: 5,
         [up("sm")(props)]: {
             flexBasis: 96,
         },
@@ -93,15 +94,19 @@ const TitleMargin = styled(Margin)<IComponentTheme>(props => {
                 ...pseudoElementStyles
             },
             "&::after": { 
-                ...pseudoElementStyles
+                ...pseudoElementStyles,
             }
         },
     };
 });
 
-interface ISectionProps extends IComponentTheme {
+interface ISectionProps extends IColorTheme {
     title?: string;
     name?: string;
+    children: (
+        React.ReactElement
+        | React.ReactElement[] 
+    );
 }
 
 const Section: React.FC<ISectionProps> = props => {
@@ -115,19 +120,26 @@ const Section: React.FC<ISectionProps> = props => {
     const titleColor = titleTheme[props.color];
 
     const backgroundColorTheme = {
-        dark: "black",
-        light: "white",
-        blue: "blueDefault"
+        dark: {
+            color: "black",
+        },
+        light: {
+            color: "white",
+        },
+        blue: {
+            color: "blueDefault",
+            lighten: 0.15
+        }
     } as const;
 
-    const backgroundColor = backgroundColorTheme[props.color];
-
-    const idProp = props.name ? {} : { id: props.name };
+    const backgroundColorProps = {
+        ...backgroundColorTheme[props.color],
+        id: props.name ?? ""
+    }
 
     return (
         <BackgroundColor 
-        {...idProp}
-        color={backgroundColor}>
+        {...backgroundColorProps}>
             <Content>
                 <Padding
                 px="s5"
@@ -142,7 +154,7 @@ const Section: React.FC<ISectionProps> = props => {
                             <Title 
                             transform="capitalize"
                             color={titleColor}>
-                                {props.title}  
+                                {props.title}
                             </Title>
                         </Margin>
                     </TitleMargin>}

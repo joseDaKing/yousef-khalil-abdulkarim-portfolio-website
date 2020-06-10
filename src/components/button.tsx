@@ -7,34 +7,65 @@ import {
 }
 from "../theme";
 
-import {
-    Padding
-}
-from "../components/utilityComponents";
-
 import { 
     defaultTransition 
 } 
 from "../utilities";
 
 import { 
-    IComponentTheme
+    IColorTheme,
+    ISizeTheme
 }
 from "../types";
+
+import {
+    spacing
+}
+from "../theme";
 
 import Color from "color";
 
 
 
-const Button = styled.button<IComponentTheme>(props => {
+const Button = styled.button<IColorTheme & ISizeTheme>(props => {
 
-    const componentThemeColor = {
+    const themeColors = {
         blue: colors.blueDefault,
         dark: colors.grayDark,
         light: colors.blueLightest
     }
 
-    const color = componentThemeColor[props.color];
+    const color = themeColors[props.color];
+
+    const baseFontSize = 14;
+
+    const themeSizes = {
+        xl: {
+            fontSize: baseFontSize * 1.3,
+            padding: `${spacing.scaling[5]}px ${spacing.scaling[6]}px`,
+        },
+        lg: {
+            fontSize: baseFontSize * 1.15,
+            padding: `${spacing.scaling[4]}px ${spacing.scaling[5]}px`,
+        },
+        md: {
+            fontSize: baseFontSize,
+            padding: `${spacing.scaling[3]}px ${spacing.scaling[4]}px`,
+        },
+        sm: {
+            fontSize: baseFontSize * 0.85,
+            padding: `${spacing.scaling[2]}px ${spacing.scaling[3]}px`,
+        },
+        xs: {
+            fontSize: baseFontSize * 0.7,
+            padding: `${spacing.scaling[1]}px ${spacing.scaling[2]}px`,
+        },
+    }
+
+    const {
+        fontSize,
+        padding
+    } = themeSizes[props.size ?? "md"];
 
     return {
         display: "block",
@@ -47,7 +78,8 @@ const Button = styled.button<IComponentTheme>(props => {
         borderRadius: 3,
         letterSpacing: 1.5,
         textTransform: "uppercase",
-        fontSize: 14,
+        fontSize,
+        padding,
         "&:hover": {
             ...defaultTransition,
             backgroundColor: (
@@ -59,27 +91,8 @@ const Button = styled.button<IComponentTheme>(props => {
     }
 });
 
-interface IButton extends IComponentTheme {
+interface IButton extends IColorTheme, ISizeTheme {
     href?: string;
 }
 
-const Btn: React.FC<IButton> = props => {
-    return (
-        <a 
-        style={{
-            textDecoration: "none"
-        }}
-        href={props.href ?? "/"}>
-            <Button 
-            color={props.color}>
-                <Padding 
-                py="s3" 
-                px="s4">
-                    {props.children}
-                </Padding>
-            </Button>
-        </a>
-    );
-}
-
-export default Btn;
+export default Button;

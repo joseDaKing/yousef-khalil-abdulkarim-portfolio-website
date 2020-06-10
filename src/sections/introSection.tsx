@@ -1,65 +1,108 @@
 import React from "react"
 
-import theme from "../theme";
-
-import Section from "../components/section";
-
-import Wrapper from "../components/wrapper";
-
 import Button from "../components/button";
+
+import Layout from "../components/layout";
+
+import MediaQuery from "react-responsive";
+
+import {
+    breakpoints
+}
+from "../theme";
 
 import {
     Text,
+    SubTitle,
     Display
-}
+} 
 from "../components/typography";
 
-import color from "color";
+import {
+    Margin,
+    Style,
+    Flex
+}
+from "../components/utilityComponents";
+
+import {
+    navigate
+}
+from "@reach/router";
 
 
 
-const IntroSection = () => {
-
-    const bgColor = theme.colors.gray.dark; 
-
+export const IntroSection = () => {
     return (
-        <Section
-        backgroundColor={bgColor}>
-            <Text color={theme.colors.blue.lightest}>
-                Hi, my name is
-            </Text>
+        <Layout.Section 
+        color="light">
+            <Layout.Grid 
+            structure={[["b1"]]}>
+                <Layout.Box 
+                name="b1">
+                    <Margin 
+                    ml="s3">
+                        <SubTitle 
+                        alpha={0.9}
+                        color="blue">
+                            Hi, my name is
+                        </SubTitle>
+                    </Margin>
 
-            <Display color={theme.colors.silver.light}>
-                Brittany Chiang.
-            </Display>
+                    <Display 
+                    color="dark">
+                        Yousef Abdulkarim.
+                    </Display>
 
-            <Wrapper mb={5}>
-                <Display color={theme.colors.gray.light}>
-                    I build things for the web.
-                </Display>
-            </Wrapper>
+                    <Margin 
+                    mb="s9">
+                        <Display 
+                        color="dark"
+                        alpha={0.85}>
+                            I build things for the web.
+                        </Display>
+                    </Margin>
 
-            <Wrapper 
-            style={{
-                width: "100%",
-                maxWidth: 512
-            }}>
-                <Text color={color(theme.colors.gray.light).darken(0.05).string()}>
-                    I'm a software engineer based in Boston, 
-                    MA specializing in building (and occasionally designing) 
-                    exceptional websites, applications, and everything in between.
-                </Text>
-            </Wrapper>
+                    <Style 
+                    value={{
+                        width: "100%",
+                        maxWidth: 256 + 128 + 64 + 32
+                    }}>
+                        <Margin 
+                        mb="s7">
+                            <Text 
+                            color="dark"
+                            alpha={0.85}>
+                                I am a self taught software developer based in Malmö Sweden,
+                                specializing in building exceptional websites, mobile apps
+                                and everything in between. 
+                            </Text>
+                        </Margin>
+                    </Style>
 
-            <Wrapper my={9}>
-                <Button href="#contact">
-                    <Wrapper py={3}>
-                        get in touch
-                    </Wrapper>
-                </Button>
-            </Wrapper>
-        </Section>
-    );
+                    <MediaQuery minWidth={breakpoints.md + 1}>
+                        <Button
+                        onClick={() => navigate("mailto:yousefkhalil125@gmail.com")}
+                        color="blue" 
+                        size="lg">
+                            get in touch
+                        </Button>
+                    </MediaQuery>
+
+                    <MediaQuery maxWidth={breakpoints.md}>
+                        <Flex justifyContent="center">
+                            <Button
+                            onClick={() => navigate("mailto:yousefkhalil125@gmail.com")}
+                            color="blue" 
+                            size="lg">
+                                get in touch
+                            </Button>
+                        </Flex>
+                    </MediaQuery>
+                </Layout.Box>
+            </Layout.Grid>
+        </Layout.Section>
+    )
 }
 
 export default IntroSection;

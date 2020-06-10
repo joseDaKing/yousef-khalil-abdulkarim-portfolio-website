@@ -1,99 +1,135 @@
 import React from "react"
 
-import theme from "../theme";
-
-import Section from "../components/section";
-
-import Wrapper from "../components/wrapper";
-
-import LayoutDivider from "../components/layoutDivider";
-
-import Image from "../components/image";
+import Layout from "../components/layout";
 
 import List from "../components/list";
 
-import {
-    Text
-}
-from "../components/typography";
+import Image from "../components/image";
+
+import MediaQuery from "react-responsive";
 
 // @ts-ignore
-import portofolioImageUrl from "../images/test_portfolio.webp";
+import portfolioImageUrl from "../images/portfolio.jpg";
+
+import {
+    Text
+} 
+from "../components/typography";
+
+import {
+    Margin    
+}
+from "../components/utilityComponents";
+
+import {
+    breakpoints
+}
+from "../theme";
 
 
 
-const RightSide = () => {
+const TextSide = () => {
     return (
-        <Wrapper
-        style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-        }}>
-            <Image src={portofolioImageUrl}/>
-        </Wrapper>
-    )
-};
-
-const LeftSide = () => {
-
-    const textColor = theme.colors.near.black;
-
-    return (
-        <Wrapper>
-            <Wrapper mb={6}>
-                <Text color={textColor}>
-                    Hello! I'm Brittany, a software engineer based in Boston, MA. <br/><br/>
+        <React.Fragment>
+            <Margin mb="s5">
+                <Text 
+                alpha={0.9}
+                color="light">
+                    Hello! I'm Yousef, a software developer based in Malmö Sweden.
                 </Text>
+            </Margin>
 
-                <Text color={textColor}>
+            <Margin mb="s5">
+                <Text
+                alpha={0.9}
+                color="light">
                     I enjoy creating things that live on the internet, 
-                    whether that be websites, applications, or anything
-                    in between. My goal is to always build products
-                    that provide pixel-perfect, performant experiences. <br/><br/>
+                    whether that be websites, mobile apps, or anything in between. 
+                    My goal is to always build products that provide pixel-perfect, 
+                    performant experiences.
                 </Text>
+            </Margin>
 
-                <Text color={textColor}>
-                    Shortly after graduating from Northeastern 
-                    University, I joined the engineering team at Upstatement
-                    where I work on a wide variety of interesting 
-                    and meaningful projects on a daily basis. <br/> <br/>
-                </Text>
-
-                <Text color={textColor}>
+            <Margin mb="s6">
+                <Text 
+                alpha={0.9}
+                color="light">
                     Here are a few technologies I've been working with recently:
-                </Text>
-            </Wrapper>
-            
-            <List 
+                </Text>      
+            </Margin>
+
+            <List
+            color="light" 
             items={[
                 [
                     "JavaScript (ES6+)",
-                    "React",
-                    "Node.js"
+                    "TypeScript",
+                    "Node.js",
+                    "MongoDB"
                 ],
                 [
                     "HTML & (S)CSS",
-                    "Vue",
-                    "WordPress"
+                    "React",
+                    "React Native"
                 ]
             ]}/>
-        </Wrapper>
-    )
+        </React.Fragment>
+    );
 }
 
-const AboutMeSection = () => {
+const PortfolioSide = () => {
     return (
-        <Section
-        name="about"
-        title={"about me"}>
-
-            <LayoutDivider
-            invert
-            left={LeftSide}
-            right={RightSide}/>
-        </Section>
-    )
+        <Image 
+        round
+        width={300}
+        src={portfolioImageUrl}/>
+    );
 }
 
-export default AboutMeSection;
+export const AboutMeSection = () => {
+    return (
+        <Layout.Section
+        title="About me"
+        name="about" 
+        color="blue">
+            <MediaQuery minWidth={breakpoints.md + 1}>
+                <Layout.Grid 
+                gapX="s6"
+                gapY="s6" 
+                structure={[
+                    ["textSide", "portfolioSide"],
+                ]}>
+                    <Layout.Box 
+                    name="textSide">
+                        <TextSide/>
+                    </Layout.Box>
+
+                    <Layout.Box 
+                    name="portfolioSide">
+                        <PortfolioSide/>
+                    </Layout.Box>
+                </Layout.Grid>
+            </MediaQuery>
+            
+            <MediaQuery maxWidth={breakpoints.md}>
+                <Layout.Grid 
+                gapX="s6"
+                gapY="s6" 
+                structure={[
+                    ["portfolioSide"],
+                    ["textSide"],
+                ]}>
+                    <Layout.Box 
+                    name="textSide">
+                        <TextSide/>
+                    </Layout.Box>
+
+                    <Layout.Box 
+                    name="portfolioSide">
+                        <PortfolioSide/>
+                    </Layout.Box>
+                </Layout.Grid>
+            </MediaQuery>
+        </Layout.Section>
+    );
+}

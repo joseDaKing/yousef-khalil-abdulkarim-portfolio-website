@@ -6,7 +6,7 @@ import {
 from "../theme";
 
 import {
-    ComponentTheme,
+    IColorTheme,
     IColorProps
 }
 from "../types"
@@ -18,8 +18,7 @@ from "../utilities";
 
 
 
-interface ITypographyProps extends IColorProps {
-    color: ComponentTheme;
+interface ITypographyProps extends IColorProps, IColorTheme {
     size?: number; 
     align?: CSSObject["textAlign"];
     transform?: CSSObject["textTransform"];
@@ -54,7 +53,7 @@ export const Brand = styled.h6<ITypographyProps>(props => ({
 }));
 
 export const Display = styled.h1<ITypographyProps>(props => ({
-    ...createCommonProps(props, 70),
+    ...createCommonProps(props, 60),
     letterSpacing: 3,
 }));
 

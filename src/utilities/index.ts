@@ -1,6 +1,7 @@
 import {
     SpacingMetric, 
     IColorProps,
+    BreakpointStyleType
 }
 from "../types";
 
@@ -10,6 +11,8 @@ import {
 from "../theme";
 
 import color from "color";
+
+import tcomb from "tcomb-validation";
 
 
 
@@ -65,31 +68,51 @@ export const applyColorProps = (colorStr: string, colorProps: IColorProps) => {
         alpha
     } = colorProps;
 
-    const colorObj = color(colorStr);
+    const hasColorProps = (
+        negate !== undefined
+        || lighten !== undefined
+        || darken !== undefined
+        || saturate !== undefined
+        || desaturate !== undefined
+        || grayscale !== undefined
+        || whiten !== undefined
+        || blacken !== undefined
+        || fade !== undefined
+        || opaquer !== undefined
+        || rotate !== undefined
+        || alpha !== undefined
+    );
+    
+    if (hasColorProps) {
+        
+        let colorObj = color(colorStr);
+        
+        if (negate) colorObj.negate();
 
-    if (negate) colorObj.negate();
-    
-    if (lighten) colorObj.lighten(lighten)
-    
-    if (darken) colorObj.darken(darken);
-    
-    if (saturate) colorObj.saturate(saturate);
-    
-    if (desaturate) colorObj.desaturate(desaturate);
-    
-    if (grayscale) colorObj.grayscale();
-    
-    if (whiten) colorObj.whiten(whiten);
-    
-    if (blacken) colorObj.blacken(blacken);
-    
-    if (fade) colorObj.fade(fade);
-    
-    if (opaquer) colorObj.opaquer(opaquer);
-    
-    if (rotate) colorObj.rotate(rotate);
-    
-    if (alpha) colorObj.alpha(alpha);
+        if (lighten) colorObj = colorObj.lighten(lighten);
+        
+        if (darken) colorObj = colorObj.darken(darken);
+        
+        if (saturate) colorObj = colorObj.saturate(saturate);
+        
+        if (desaturate) colorObj = colorObj.desaturate(desaturate);
+        
+        if (grayscale) colorObj = colorObj.grayscale();
+        
+        if (whiten) colorObj = colorObj.whiten(whiten);
+        
+        if (blacken) colorObj = colorObj.blacken(blacken);
+        
+        if (fade) colorObj = colorObj.fade(fade);
+        
+        if (opaquer) colorObj = colorObj.opaquer(opaquer);
+        
+        if (rotate) colorObj = colorObj.rotate(rotate);
+        
+        if (alpha) colorObj = colorObj.alpha(alpha);
 
-    return colorObj.string();
+        return colorObj.string();   
+    }
+
+    return colorStr;
 }

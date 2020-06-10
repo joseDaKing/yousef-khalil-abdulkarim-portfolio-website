@@ -33,7 +33,7 @@ import Items, {
 from "./items";
 
 import { 
-    IComponentTheme
+    IColorTheme
 }
 from "../../../types";
 
@@ -41,7 +41,7 @@ import Button from "../../button";
 
 
 
-const DrawerContainer = styled(animated.aside)<IComponentTheme>(props => {
+const DrawerContainer = styled(animated.aside)<IColorTheme>(props => {
 
     const colorTheme = {
         dark: colors.grayDark,
@@ -66,7 +66,7 @@ const DrawerContainer = styled(animated.aside)<IComponentTheme>(props => {
     }
 });
 
-interface IDrawerProps extends IItemsProps, IComponentTheme {
+interface IDrawerProps extends IItemsProps, IColorTheme {
     isOpen: boolean;
     onClose: () => void;
 }

@@ -2,28 +2,70 @@ import React from "react";
 
 import styled from "styled-components";
 
-import theme from "../theme";
+import {
+    colors
+} 
+from "../theme";
 
-import Wrapper from "./wrapper";
+import {
+    Margin 
+}
+from "./utilityComponents";
+
+import {
+    IColorTheme
+}
+from "../types";
+
+import Color from "color";
 
 
+const ListItem = styled.li<IColorTheme>(props => {
 
-const ListItem = styled.li({
-    position: "relative",
-    fontFamily: "roboto",
-    color: theme.colors.near.black,
-    "&:before": {
-        content: `""`,
-        position: "absolute",
-        left: -16,
-        top: "50%",
-        transform: "translateY(-50%)",
-        width: 8,
-        height: 8,
-        backgroundColor: theme.colors.blue.default,
-        borderRadius: "100%"
+    const colorTheme = {
+        dark: {
+            color: colors.grayDark,
+            backgroundColor: colors.black,
+        },
+        light: {
+            color: colors.silverLight,
+            backgroundColor: colors.grayLight,
+        },
+        blue: {
+            color: colors.black,
+            backgroundColor: colors.blueDefault,
+        }
     }
-})
+
+    const {
+        color,
+        backgroundColor
+    } = colorTheme[props.color];
+
+    return {
+        position: "relative",
+        fontFamily: "roboto",
+        color: (
+            Color(color)
+            .alpha(0.8)
+            .string()
+        ),
+        "&:before": {
+            content: `""`,
+            position: "absolute",
+            left: -16,
+            top: "0px",
+            width: 8,
+            height: 8,
+            backgroundColor: (
+                Color(backgroundColor)
+                .alpha(0.85)
+                .string()
+            ),
+            borderRadius: "100%"
+        }
+    }
+});
 
 const ListGroup = styled.ul({
     listStyle: "none",
@@ -39,26 +81,30 @@ const ListContainer = styled.div({
     flexWrap: "wrap"
 });
 
-interface ISkillSetProps {
+interface IListProps extends IColorTheme {
     items: string[][];
 }
 
-const SkillSets: React.FC<ISkillSetProps> = props => {
+const List: React.FC<IListProps> = props => {
     return (
         <ListContainer>
             {props.items.map((listGroup, index) => (
-                <Wrapper mb={7} key={index}>
+                <Margin 
+                mb="s7" 
+                key={index}>
                     <ListGroup>
                         {listGroup.map(skill => (
-                            <ListItem key={skill}>
+                            <ListItem 
+                            color={props.color}
+                            key={skill}>
                                 {skill}
                             </ListItem>
                         ))}
                     </ListGroup>
-                </Wrapper>
+                </Margin>
             ))}
         </ListContainer>
     );
 }
 
-export default SkillSets;
+export default List;

@@ -36,9 +36,9 @@ export const Margin = styled.div<IMarginProps>(props => ({
 
 function applyHorizontalMargin(props: IMarginProps) {
     
-    let marginLeft: number;
+    let marginLeft: number | string;
 
-    let marginRight: number;
+    let marginRight: number | string;
 
     if (props.m) {
         marginLeft = getScaleValue(props.m);
@@ -66,9 +66,9 @@ function applyHorizontalMargin(props: IMarginProps) {
 
 function applyVerticalMargin(props: IMarginProps) {
     
-    let marginTop: number;
+    let marginTop: number | string;
 
-    let marginBottom: number;
+    let marginBottom: number | string;
 
     if (props.m) {
         marginTop = getScaleValue(props.m);

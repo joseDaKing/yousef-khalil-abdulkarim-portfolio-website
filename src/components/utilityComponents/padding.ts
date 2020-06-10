@@ -35,9 +35,9 @@ export const Padding = styled.div<IPaddingProps>(props => ({
 }));
 
 function applyHorizontalPadding(props: IPaddingProps) {
-    let paddingLeft: number;
+    let paddingLeft: number | string;
 
-    let paddingRight: number;
+    let paddingRight: number | string;
 
     if (props.p) {
         paddingLeft = getScaleValue(props.p);
@@ -65,9 +65,9 @@ function applyHorizontalPadding(props: IPaddingProps) {
 
 function applyVerticalPadding(props: IPaddingProps) {
     
-    let paddingTop: number = 0;
+    let paddingTop: number | string = 0;
 
-    let paddingBottom: number = 0;
+    let paddingBottom: number | string = 0;
 
     if (props.p) {
         paddingTop = getScaleValue(props.p);
