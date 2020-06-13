@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Yousef Abdulkarim | Software Developer `,
-    link: "",
+    link: "https://github.com/joseDaKing/yousef-khalil-abdulkarim-portfolio-website",
     author: `Yousef Abdulkarim`,
   },
   plugins: [
