@@ -37,6 +37,8 @@ import {
 }
 from "./grid";
 
+import Fade from "react-reveal/Fade";
+
 
 
 const Content = styled.div(props => ({
@@ -146,18 +148,20 @@ const Section: React.FC<ISectionProps> = props => {
                 pt="l6"
                 pb="l7">
 
-                    {props.title &&
-                    <TitleMargin 
-                    mb="s9"
-                    color={props.color}>
-                        <Margin mx="s5">
-                            <Title 
-                            transform="capitalize"
-                            color={titleColor}>
-                                {props.title}
-                            </Title>
-                        </Margin>
-                    </TitleMargin>}
+                    <Fade bottom>
+                        {props.title &&
+                        <TitleMargin 
+                        mb="s9"
+                        color={props.color}>
+                            <Margin mx="s5">
+                                <Title 
+                                transform="capitalize"
+                                color={titleColor}>
+                                    {props.title}
+                                </Title>
+                            </Margin>
+                        </TitleMargin>}
+                    </Fade>
                     
                     {props.children}
                 </Padding>

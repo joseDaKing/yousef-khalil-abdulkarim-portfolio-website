@@ -36,6 +36,8 @@ import {
 }
 from "gatsby";
 
+import Fade from "react-reveal/Fade";
+
 
 
 export const IntroSection = () => {
@@ -54,6 +56,68 @@ export const IntroSection = () => {
         }
     `).intro; 
 
+    const button = (
+        <Button
+        onClick={() => navigate("mailto:yousefkhalil125@gmail.com")}
+        color="blue" 
+        size="lg">
+            {data.frontmatter.buttonText}
+        </Button>
+    );
+
+    const elements = [
+        <Margin 
+        ml="s3">
+            <SubTitle 
+            alpha={0.9}
+            color="blue">
+                {data.frontmatter.title}
+            </SubTitle>
+        </Margin>,
+
+        <Display 
+        color="dark">
+            {data.frontmatter.name}
+        </Display>,
+
+        <Margin 
+        mb="s9">
+            <Display 
+            color="dark"
+            alpha={0.85}>
+                {data.frontmatter.subTitle}
+            </Display>
+        </Margin>,
+
+        <Style 
+        value={{
+            width: "100%",
+            maxWidth: 256 + 128 + 64 + 32
+        }}>
+            <Margin 
+            mb="s7">
+                <Text 
+                color="dark"
+                alpha={0.85}>
+                    {(data.html as string).replace(/<p>/g, "").replace(/<\/p>/g, "")}
+                </Text>
+            </Margin>
+        </Style>,
+
+        <MediaQuery 
+        maxWidth={breakpoints.md}>
+            <Flex 
+            justifyContent="center">
+                {button}
+            </Flex>
+        </MediaQuery>,
+
+        <MediaQuery 
+        minWidth={breakpoints.md + 1}>
+            {button}
+        </MediaQuery>
+    ];
+
     return (
         <Layout.Section 
         color="light">
@@ -61,63 +125,14 @@ export const IntroSection = () => {
             structure={[["b1"]]}>
                 <Layout.Box 
                 name="b1">
-                    <Margin 
-                    ml="s3">
-                        <SubTitle 
-                        alpha={0.9}
-                        color="blue">
-                            {data.frontmatter.title}
-                        </SubTitle>
-                    </Margin>
-
-                    <Display 
-                    color="dark">
-                        {data.frontmatter.name}
-                    </Display>
-
-                    <Margin 
-                    mb="s9">
-                        <Display 
-                        color="dark"
-                        alpha={0.85}>
-                            {data.frontmatter.subTitle}
-                        </Display>
-                    </Margin>
-
-                    <Style 
-                    value={{
-                        width: "100%",
-                        maxWidth: 256 + 128 + 64 + 32
-                    }}>
-                        <Margin 
-                        mb="s7">
-                            <Text 
-                            color="dark"
-                            alpha={0.85}>
-                                {(data.html as string).replace(/<p>/g, "").replace(/<\/p>/g, "")}
-                            </Text>
-                        </Margin>
-                    </Style>
-
-                    <MediaQuery minWidth={breakpoints.md + 1}>
-                        <Button
-                        onClick={() => navigate("mailto:yousefkhalil125@gmail.com")}
-                        color="blue" 
-                        size="lg">
-                            {data.frontmatter.buttonText}
-                        </Button>
-                    </MediaQuery>
-
-                    <MediaQuery maxWidth={breakpoints.md}>
-                        <Flex justifyContent="center">
-                            <Button
-                            onClick={() => navigate("mailto:yousefkhalil125@gmail.com")}
-                            color="blue" 
-                            size="lg">
-                                {data.frontmatter.buttonText}
-                            </Button>
-                        </Flex>
-                    </MediaQuery>
+                    {elements.map((item, index) => (
+                        <Fade
+                        key={index}
+                        delay={index * 50 + 500}
+                        bottom>
+                            {item}
+                        </Fade>
+                    ))}
                 </Layout.Box>
             </Layout.Grid>
         </Layout.Section>

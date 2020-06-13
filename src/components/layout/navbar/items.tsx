@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import {
     colors,
+    breakpoints
 } 
 from "../../../theme";
 
@@ -21,6 +22,13 @@ import {
     IColorTheme
 }
 from "../../../types";
+
+import {
+    useMediaQuery
+}
+from "react-responsive";
+
+import Fade from "react-reveal/Fade";
 
 
 
@@ -88,6 +96,11 @@ export interface IItemsProps extends IColorTheme {
 }
 
 const Items: React.FC<IItemsProps> = props => {
+    
+    const tabletBreakpointDown = useMediaQuery({
+        maxWidth: breakpoints.md
+    });
+
     return (
         <React.Fragment>
             {props.items.map((name, index) => {
@@ -96,7 +109,7 @@ const Items: React.FC<IItemsProps> = props => {
 
                 const isActive = props.active === link;
 
-                return (
+                const item = (
                     <Item 
                     color={props.color}
                     onClick={props.onClick}
@@ -111,6 +124,17 @@ const Items: React.FC<IItemsProps> = props => {
                         </Padding>
                     </Item>
                 );
+
+                if (tabletBreakpointDown) return item;
+
+                else return (
+                    <Fade 
+                    key={name}
+                    top 
+                    delay={index * 150}>
+                        {item}
+                    </Fade>
+                )
             })}
         </React.Fragment>
     );

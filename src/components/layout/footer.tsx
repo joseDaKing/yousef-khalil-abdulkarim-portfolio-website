@@ -32,6 +32,10 @@ import {
 }
 from "gatsby";
 
+import Fade from "react-reveal/Fade";
+
+
+
 const Footer: React.FC<IColorTheme> = props => {
 
     const theme = {
@@ -90,9 +94,11 @@ const Footer: React.FC<IColorTheme> = props => {
             <Padding 
             py="s6" 
             px="s2">
-                <p onClick={() => navigate(link)}>
-                    Designed & Build by {author}
-                </p>
+                <Fade>
+                    <p onClick={() => navigate(link)}>
+                        Designed & Build by {author}
+                    </p>
+                </Fade>
             </Padding>
         </Style>
     );

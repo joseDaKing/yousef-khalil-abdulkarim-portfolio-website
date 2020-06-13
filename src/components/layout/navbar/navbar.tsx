@@ -58,6 +58,8 @@ import {
 }
 from "@reach/router";
 
+import Fade from "react-reveal";
+
 
 
 const getLogoUrl = (theme: IColorTheme["color"]) => {
@@ -132,10 +134,13 @@ const Navbar: React.FC<INavbarProps> = props => {
 
     const navbarButton = navbarButtonTheme[props.color];
 
-    
+    const buttonFadeInDelay = props.items.reduce(number => number + 1, 1) * 150;
+
+    console.log(buttonFadeInDelay);
 
     return (
         <Container color={props.color}>
+            
             <Style 
             onClick={() => navigate("/")}
             value={{
@@ -147,18 +152,24 @@ const Navbar: React.FC<INavbarProps> = props => {
                 <Flex 
                 justifyContent="center" 
                 alignItems="center">
-                    <Margin ml="s6" >
-                        <Image 
-                        width={28}
-                        src={getLogoUrl(props.color)}/>
-                    </Margin>
+                    <Fade
+                    duration={350}>
+                        <Margin ml="s6" >
+                            <Image 
+                            width={28}
+                            src={getLogoUrl(props.color)}/>
+                        </Margin>
+                    </Fade>
                     
                     {c && 
-                    <Margin ml="s3">
-                        <Brand color={buttonColor}>
-                            yousef
-                        </Brand>
-                    </Margin>}
+                    <Fade 
+                    duration={350}>
+                        <Margin ml="s3">
+                            <Brand color={buttonColor}>
+                                yousef
+                            </Brand>
+                        </Margin>
+                    </Fade>}
                 </Flex>
             </Style>
 
@@ -175,10 +186,14 @@ const Navbar: React.FC<INavbarProps> = props => {
                         textDecoration: "none"
                     }}
                     href={cvUrl}>
-                        <Button 
-                        color={buttonColor}>
-                            Resume
-                        </Button>
+                        <Fade
+                        top
+                        delay={buttonFadeInDelay}>
+                            <Button 
+                            color={buttonColor}>
+                                Resume
+                            </Button>
+                        </Fade>
                     </a>
                 </Padding>
             </MediaQuery>
