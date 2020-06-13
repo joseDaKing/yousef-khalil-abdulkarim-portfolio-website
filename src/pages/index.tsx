@@ -1,34 +1,18 @@
 import React from "react"
 
-import {
-    createGlobalStyle
-} 
-from "styled-components";
-
 import Layout from "../components/layout";
 
 import * as sections from "../sections/";
 
 import Head from "../components/head";
 
+import {
+    GlobalStyles,
+    navbarItems
+}
+from "../config";
 
 
-const GlobalStyles = createGlobalStyle({
-    ":root": {
-        scrollBehavior: "smooth",
-        fontFamily: "roboto"
-    },
-    body: {
-        margin: 0
-    }
-});
-
-const pages = [
-    "about",
-    "experience",
-    "work",
-    "contact"
-];
 
 const IndexPage = () => {
     return (
@@ -36,7 +20,7 @@ const IndexPage = () => {
             <GlobalStyles/>
             <Head/>
             <Layout
-            items={pages}>
+            items={navbarItems}>
                 {Object
                 .values(sections).map(
                     (Section, index) => 

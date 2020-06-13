@@ -23,21 +23,21 @@ import {
 }
 from "@reach/router";
 
+import {
+    GlobalStyles,
+    navbarItems
+}
+from "../config";
 
 
-const pages = [
-    "about",
-    "experience",
-    "work",
-    "contact"
-];
 
 const NotFoundPage = () => {
     return (
         <React.Fragment>
             <Head/>
+            <GlobalStyles/>
             <Layout 
-            items={pages}>
+            items={navbarItems}>
                 <Layout.Section 
                 color="light">
                     <Layout.Grid
