@@ -69,7 +69,6 @@ const Button = styled.button<IColorTheme & ISizeTheme>(props => {
 
     return {
         display: "block",
-        fontFamily: "roboto",
         all: "unset",
         cursor: "pointer",
         backgroundColor: "transparent",
@@ -90,9 +89,5 @@ const Button = styled.button<IColorTheme & ISizeTheme>(props => {
         }
     }
 });
-
-interface IButton extends IColorTheme, ISizeTheme {
-    href?: string;
-}
 
 export default Button;

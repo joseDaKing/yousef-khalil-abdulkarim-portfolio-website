@@ -60,7 +60,6 @@ const Item = styled.a<IItemProps>(props => {
     } = componentThemeColors[props.color];
 
     return {
-        fontFamily: "roboto",
         fontSize: 15,
         display: "block",
         textDecoration: "none",

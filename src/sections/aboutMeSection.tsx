@@ -26,27 +26,22 @@ import {
 }
 from "../theme";
 
+import {
+    graphql,
+    useStaticQuery
+}
+from "gatsby";
 
 
-const TextSide = () => {
+
+const TextSide: React.FC<{ data: any }> = props => {
     return (
         <React.Fragment>
-            <Margin mb="s5">
-                <Text 
-                alpha={0.9}
-                color="light">
-                    Hello! I'm Yousef, a software developer based in Malmö Sweden.
-                </Text>
-            </Margin>
-
             <Margin mb="s5">
                 <Text
                 alpha={0.9}
                 color="light">
-                    I enjoy creating things that live on the internet, 
-                    whether that be websites, mobile apps, or anything in between. 
-                    My goal is to always build products that provide pixel-perfect, 
-                    performant experiences.
+                    {(props.data.html as string).replace(/<p>/g, "").replace(/<\/p>/g, "")}
                 </Text>
             </Margin>
 
@@ -61,17 +56,8 @@ const TextSide = () => {
             <List
             color="light" 
             items={[
-                [
-                    "JavaScript (ES6+)",
-                    "TypeScript",
-                    "Node.js",
-                    "MongoDB"
-                ],
-                [
-                    "HTML & (S)CSS",
-                    "React",
-                    "React Native"
-                ]
+                props.data.frontmatter.skills1,
+                props.data.frontmatter.skills2
             ]}/>
         </React.Fragment>
     );
@@ -87,6 +73,20 @@ const PortfolioSide = () => {
 }
 
 export const AboutMeSection = () => {
+
+    const data = useStaticQuery(graphql`
+        {
+            about: markdownRemark(fileAbsolutePath: {regex: "/about/"}) {
+                frontmatter {
+                    title
+                    skills1,
+                    skills2
+                }
+                html
+            }
+        }
+    `).about;
+
     return (
         <Layout.Section
         title="About me"
@@ -101,7 +101,8 @@ export const AboutMeSection = () => {
                 ]}>
                     <Layout.Box 
                     name="textSide">
-                        <TextSide/>
+                        <TextSide 
+                        data={data}/>
                     </Layout.Box>
 
                     <Layout.Box 
@@ -121,7 +122,8 @@ export const AboutMeSection = () => {
                 ]}>
                     <Layout.Box 
                     name="textSide">
-                        <TextSide/>
+                        <TextSide 
+                        data={data}/>
                     </Layout.Box>
 
                     <Layout.Box 

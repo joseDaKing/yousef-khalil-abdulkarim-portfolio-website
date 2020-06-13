@@ -1,5 +1,3 @@
-import "normalize-css";
-
 import React from "react"
 
 import {
@@ -11,11 +9,17 @@ import Layout from "../components/layout";
 
 import * as sections from "../sections/";
 
+import Head from "../components/head";
+
 
 
 const GlobalStyles = createGlobalStyle({
     ":root": {
-        scrollBehavior: "smooth"
+        scrollBehavior: "smooth",
+        fontFamily: "roboto"
+    },
+    body: {
+        margin: 0
     }
 });
 
@@ -30,7 +34,7 @@ const IndexPage = () => {
     return (
         <React.Fragment>
             <GlobalStyles/>
-
+            <Head/>
             <Layout
             items={pages}>
                 {Object

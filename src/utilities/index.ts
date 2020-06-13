@@ -1,7 +1,6 @@
 import {
     SpacingMetric, 
     IColorProps,
-    BreakpointStyleType
 }
 from "../types";
 
@@ -11,8 +10,6 @@ import {
 from "../theme";
 
 import color from "color";
-
-import tcomb from "tcomb-validation";
 
 
 

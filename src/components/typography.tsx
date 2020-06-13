@@ -37,7 +37,6 @@ const createCommonProps = (props: ITypographyProps, size: number) => {
     return {
         color: applyColorProps(color, props),
         fontSize: size * Math.round(props.size || 1),
-        fontFamily: "roboto",
         margin: 0,
         padding: 0,
         textAlign: props.align ?? "left",

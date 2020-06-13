@@ -57,10 +57,7 @@ interface IJob {
     companyLink: string;
     descriptions: string[];
     title: string;
-    date: {
-        start: IDate;
-        end: IDate;
-    };
+    date: string;
 }
 
 interface IJobsProps extends Omit<ITabsProps, "items">{
@@ -75,10 +72,7 @@ const Jobs: React.FC<IJobsProps> = props => {
             companyLink,
             title,
             descriptions,
-            date: {
-                start,
-                end
-            }
+            date
         } = job;
 
         const titleComponent = (
@@ -136,11 +130,7 @@ const Jobs: React.FC<IJobsProps> = props => {
                         <Text 
                         lighten={0.3}
                         color="dark"> 
-                            {`${start.month.toUpperCase()} `} 
-                            {(start.year !== end.year) && ` ${start.year} `}
-                            --
-                            {` ${end.month.toLocaleUpperCase()} `} 
-                            {end.year}
+                            {date}
                         </Text>
                     </Margin>
                     

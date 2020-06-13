@@ -22,9 +22,28 @@ from "@reach/router";
 
 import Button from "../components/button";
 
+import {
+    graphql,
+    useStaticQuery
+}
+from "gatsby";
+
 
 
 export const ContactSection = () => {
+
+    const data = useStaticQuery(graphql`
+        {
+            contact: markdownRemark(fileAbsolutePath: {regex: "/contact/"}) {
+                frontmatter {
+                    title
+                    buttonText
+                }
+                html
+            }
+        }
+    `).contact;
+
     return (
         <Layout.Section
         title="What's Next?"
@@ -48,7 +67,7 @@ export const ContactSection = () => {
                             color="dark"
                             align="center"
                             transform="capitalize">
-                                get in touch
+                                {data.frontmatter.title}
                             </Display>
                         </Margin>
 
@@ -57,9 +76,7 @@ export const ContactSection = () => {
                             color="dark"
                             align="center"
                             lighten={0.15}>
-                                Although I'm not currently looking for any new opportunities, 
-                                my inbox is always open.Whether you have a question or just want to say hi, 
-                                I'll try my best to get back to you!
+                                {data.html.replace(/<p>/g, "").replace(/<\/p>/g, "")}
                             </Text>
                         </Margin>
 
@@ -69,7 +86,7 @@ export const ContactSection = () => {
                             onClick={() => navigate("mailto:yousefkhalil125@gmail.com")}
                             color="blue" 
                             size="xl">
-                                Say Hello
+                                {data.frontmatter.buttonText}
                             </Button>
                         </Flex>
                     </Style>

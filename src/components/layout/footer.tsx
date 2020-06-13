@@ -26,13 +26,13 @@ import {
 } 
 from "@reach/router";
 
-
-
-interface IFooterProps extends IColorTheme {
-    link: string;
+import {
+    useStaticQuery,
+    graphql
 }
+from "gatsby";
 
-const Footer: React.FC<IFooterProps> = props => {
+const Footer: React.FC<IColorTheme> = props => {
 
     const theme = {
         dark: {
@@ -54,6 +54,24 @@ const Footer: React.FC<IFooterProps> = props => {
         color
     } = theme[props.color];
 
+    const {
+        site: {
+            siteMetadata: {
+                author,
+                link
+            }
+        }
+    } = useStaticQuery(graphql`
+        query {
+            site {
+                siteMetadata {
+                    author
+                    link
+                }
+            }
+        }
+    `);
+
     return (
         <Style 
         value={{
@@ -65,16 +83,15 @@ const Footer: React.FC<IFooterProps> = props => {
                 cursor: "pointer",
                 margin: 0,
                 textAlign: "center",
-                fontFamily: "roboto",
                 ...defaultTransition,
                 overflow: "hidden"
             }
         }}>
             <Padding 
-            py="s7" 
+            py="s6" 
             px="s2">
-                <p onClick={() => navigate(props.link)}>
-                    Designed & Build by Yousef Abdulkarim
+                <p onClick={() => navigate(link)}>
+                    Designed & Build by {author}
                 </p>
             </Padding>
         </Style>

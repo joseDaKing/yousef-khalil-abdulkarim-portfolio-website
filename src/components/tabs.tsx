@@ -11,11 +11,6 @@ import {
 from "../utilities/index";
 
 import {
-    navigate
-}
-from "@reach/router";
-
-import {
     Padding
 }
 from "../components/utilityComponents";
@@ -33,7 +28,8 @@ import {
 from "react-responsive";
 
 import {
-    down
+    down,
+    up
 }
 from "styled-breakpoints";
 
@@ -54,7 +50,6 @@ const TabItem = styled.li<ITabItemProps>(props => {
     const styles: CSSObject = {
         ...defaultTransition, 
         cursor: "pointer",
-        fontFamily: "roboto",
         textTransform: "capitalize",
         fontWeight: 500,
         letterSpacing: 1,
@@ -127,15 +122,25 @@ const TabList = styled.ul(props => ({
     listStyle: "none",
     [down("sm")(props)]: {
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
+        width: "100%",
+        overflowX: "scroll"
+    },
+    [up("md")(props)]: {
+        height: 128 + 64,
+        overflowY: "scroll",
     }
 }));
 
 const TabsContainer = styled.div(props => ({
-    display: "flex",
+    display: "flex", 
+    position: "relative",
+    overflow: "hidden",
     [down("sm")(props)]: {
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "center",
+        width: "100%",
+        maxWidth: 512
     }
 }));
 
@@ -152,7 +157,9 @@ export interface ITabsProps {
 const Tabs: React.FC<ITabsProps> = props => {
 
     const [active, setActive] = React.useState(props.active);
-    
+
+    console.log("abra", props.items.filter(item => item.name === active)[0]);
+
     const Content = props.items.filter(item => item.name === active)[0].content;
 
     const isMdWidth= useMediaQuery({
@@ -162,7 +169,7 @@ const Tabs: React.FC<ITabsProps> = props => {
     return (
         <TabsContainer>
             <TabList>
-                {props.items.map(tab => {
+                {props.items.map((tab, index) => {
 
                     const {
                         name,
@@ -174,7 +181,7 @@ const Tabs: React.FC<ITabsProps> = props => {
 
                     return (
                         <TabItem
-                        key={name}
+                        key={name + index}
                         onClick={onSetActiveHandler}
                         mediaQuery={isMdWidth}
                         active={isActive}>

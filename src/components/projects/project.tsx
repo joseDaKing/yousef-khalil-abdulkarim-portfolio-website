@@ -66,7 +66,12 @@ const ProjectContainer = styled.div<IColorTheme>(props => {
         backgroundColor: color,
         borderRadius: 4,
         outline: `solid ${outlineColor} 6px`,
-        outlineOffset: 4
+        outlineOffset: 4,
+        ...defaultTransition,
+        "&:hover": {
+            ...defaultTransition,
+            transform: "translateY(-2.5%)"
+        }
     };
 });
 
@@ -136,23 +141,23 @@ const Project: React.FC<IProjectProps> = props => {
                             })()
                         }}/>
 
-                        {props.githubLink &&
                         <Margin 
                         ml="auto">
+                            {props.githubLink &&
                             <LinkableIcon 
                             color={contentTheme}
                             icon={GitHubIcon}
-                            link={props.githubLink}/>
-                        </Margin>}
+                            link={props.githubLink}/>}
 
-                        {props.projectLink &&
-                        <Margin 
-                        ml="s4">
-                            <LinkableIcon 
-                            color={contentTheme}
-                            icon={LinkIcon}
-                            link={props.projectLink}/>
-                        </Margin>}
+                            {props.projectLink &&
+                            <Margin 
+                            ml="s4">
+                                <LinkableIcon 
+                                color={contentTheme}
+                                icon={LinkIcon}
+                                link={props.projectLink}/>
+                            </Margin>}
+                        </Margin>
                     </Flex>
                 </Margin>
 

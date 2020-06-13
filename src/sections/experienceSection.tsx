@@ -4,88 +4,57 @@ import Layout from "../components/layout";
 
 import Jobs from "../components/jobs";
 
+import {
+    graphql,
+    useStaticQuery
+}
+from "gatsby";
 
-
-const jobbs = [
-    {
-        companyName: "upstatement",
-        companyLink: "https://www.upstatement.com/",
-        descriptions: [
-            "Collaborated with a small team of student designers to spearhead a new brand and design system for Scout’s inaugural student-led design conference at Northeastern",
-            "Worked closely with designers and management team to develop, document, and manage the conference’s marketing website using Jekyll, Sass, and JavaScript",
-        ],
-        title: "Studio Developer",
-        date: {
-            start: {
-                month: "aug",
-                year: 2018
-            },
-            end: {
-                month: "aug",
-                year: 2019
-            },
-        }
-    },
-    {
-        companyName: "ibra",
-        companyLink: "https://www.upstatement.com/",
-        descriptions: [
-            "Collaborated with a small team of student designers to spearhead a new brand and design system for Scout’s inaugural student-led design conference at Northeastern",
-            "Worked closely with designers and management team to develop, document, and manage the conference’s marketing website using Jekyll, Sass, and JavaScript",
-        ],
-        title: "Studio Developer",
-        date: {
-            start: {
-                month: "aug",
-                year: 2018
-            },
-            end: {
-                month: "aug",
-                year: 2019
-            },
-        }
-    },
-    {
-        companyName: "abra",
-        companyLink: "https://www.upstatement.com/",
-        descriptions: [
-            "Collaborated with a small team of student designers to spearhead a new brand and design system for Scout’s inaugural student-led design conference at Northeastern",
-            "Worked closely with designers and management team to develop, document, and manage the conference’s marketing website using Jekyll, Sass, and JavaScript",
-        ],
-        title: "Studio Developer",
-        date: {
-            start: {
-                month: "aug",
-                year: 2018
-            },
-            end: {
-                month: "aug",
-                year: 2019
-            },
-        }
-    },
-    {
-        companyName: "isma",
-        companyLink: "https://www.upstatement.com/",
-        descriptions: [
-            "Collaborated with a small team of student designers to spearhead a new brand and design system for Scout’s inaugural student-led design conference at Northeastern",
-            "Worked closely with designers and management team to develop, document, and manage the conference’s marketing website using Jekyll, Sass, and JavaScript",
-        ],
-        title: "Studio Developer",
-        date: {
-            start: {
-                month: "aug",
-                year: 2018
-            },
-            end: {
-                month: "aug",
-                year: 2019
-            },
-        }
-    } 
-];
 
 export const ExperienceSection = () => {
+    
+    /*
+    const data = useStaticQuery(graphql`
+        {
+            jobs: allMarkdownRemark(filter: {fileAbsolutePath: {regex: "/jobs/"}}, sort: {fields: [frontmatter___date], order: DESC}) {
+                edges {
+                    node {
+                        frontmatter {
+                            title
+                            company
+                            location
+                            range
+                            url
+                        }
+                        html
+                    }
+                }
+            }
+        }  
+    `).jobs.edges;
+    */
+
+    const jobs = (
+        data
+        .map(item => item.node)
+        .map(item => ({
+            companyName: item.frontmatter.company,
+            companyLink: item.frontmatter.url,
+            title: item.frontmatter.title,
+            range: item.frontmatter.range,
+            descriptions: (
+                item
+                .html
+                .replace(/<ul>/g, "")
+                .replace(/<\/ul>/g, "")
+                .replace(/\n/g, "")
+                .replace(/<\/li>/, "")
+                .split("<li>")
+                .filter(item => item !== "")
+            )
+        }))
+    );
+
     return (
         <Layout.Section
         name="experience"
@@ -96,10 +65,10 @@ export const ExperienceSection = () => {
                 <Layout.Box 
                 name="b1">
                     <Jobs
-                    jobs={jobbs}
-                    active="upstatement"/>
+                    jobs={jobs}
+                    active={jobs[0].companyName}/>
                 </Layout.Box>
             </Layout.Grid>
         </Layout.Section>
-    )
+    );
 }

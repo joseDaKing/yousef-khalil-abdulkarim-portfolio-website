@@ -30,9 +30,30 @@ import {
 }
 from "@reach/router";
 
+import {
+    graphql,
+    useStaticQuery
+}
+from "gatsby";
+
 
 
 export const IntroSection = () => {
+
+    const data = useStaticQuery(graphql`
+        {
+            intro: markdownRemark(fileAbsolutePath: { regex: "/intro/" }) {
+                frontmatter {
+                    title
+                    name
+                    subtitle
+                    buttonText
+                }
+                html
+            }
+        }
+    `).intro; 
+
     return (
         <Layout.Section 
         color="light">
@@ -45,13 +66,13 @@ export const IntroSection = () => {
                         <SubTitle 
                         alpha={0.9}
                         color="blue">
-                            Hi, my name is
+                            {data.frontmatter.title}
                         </SubTitle>
                     </Margin>
 
                     <Display 
                     color="dark">
-                        Yousef Abdulkarim.
+                        {data.frontmatter.name}
                     </Display>
 
                     <Margin 
@@ -59,7 +80,7 @@ export const IntroSection = () => {
                         <Display 
                         color="dark"
                         alpha={0.85}>
-                            I build things for the web.
+                            {data.frontmatter.subTitle}
                         </Display>
                     </Margin>
 
@@ -73,9 +94,7 @@ export const IntroSection = () => {
                             <Text 
                             color="dark"
                             alpha={0.85}>
-                                I am a self taught software developer based in Malmö Sweden,
-                                specializing in building exceptional websites, mobile apps
-                                and everything in between. 
+                                {(data.html as string).replace(/<p>/g, "").replace(/<\/p>/g, "")}
                             </Text>
                         </Margin>
                     </Style>
@@ -85,7 +104,7 @@ export const IntroSection = () => {
                         onClick={() => navigate("mailto:yousefkhalil125@gmail.com")}
                         color="blue" 
                         size="lg">
-                            get in touch
+                            {data.frontmatter.buttonText}
                         </Button>
                     </MediaQuery>
 
@@ -95,7 +114,7 @@ export const IntroSection = () => {
                             onClick={() => navigate("mailto:yousefkhalil125@gmail.com")}
                             color="blue" 
                             size="lg">
-                                get in touch
+                                {data.frontmatter.buttonText}
                             </Button>
                         </Flex>
                     </MediaQuery>

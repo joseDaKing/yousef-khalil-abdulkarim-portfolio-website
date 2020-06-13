@@ -19,12 +19,6 @@ import {
 } 
 from "../../utilityComponents";
 
-import {
-    useSpring,
-    animated
-} 
-from "react-spring";
-
 import { up, down } from "styled-breakpoints";
 
 import Items, {
@@ -39,9 +33,15 @@ from "../../../types";
 
 import Button from "../../button";
 
+import {
+    AnimatePresence,
+    motion
+}
+from "framer-motion";
 
 
-const DrawerContainer = styled(animated.aside)<IColorTheme>(props => {
+
+const DrawerContainer = styled(motion.aside)<IColorTheme>(props => {
 
     const colorTheme = {
         dark: colors.grayDark,
@@ -75,10 +75,6 @@ const Drawer: React.FC<IDrawerProps> = props => {
 
     const url = useLocation().hash;
 
-    const animatedStyles = useSpring({
-        transform: props.isOpen ? "translateX(0%)" : "translateX(100%)"
-    });
-
     const buttonThemes = {
         dark: "light",
         blue: "light",
@@ -87,34 +83,62 @@ const Drawer: React.FC<IDrawerProps> = props => {
 
     const buttonTheme = buttonThemes[props.color];
 
+    const drawerClosedStyle = {
+        transform: "translateX(100%)"
+    };
+
+    const drawerOpenStyle = {
+        transform: "translateX(0%)"
+    };
+
+    const drawerTransition = {
+        type: "spring",
+        damping: 20,
+        stiffness: 90
+    };
+
+    console.log(props.isOpen);
 
     return (
-        <DrawerContainer 
-        color={props.color}
-        style={animatedStyles}>
-            <Style
-            value={{
-                height: "50%",
-                "& > *": {
-                    textAlign: "center"
-                }
-            }}>
-                <Flex flexDirection="column" justifyContent="space-around">
-                    <Items 
-                    color={props.color}
-                    onClick={props.onClose}
-                    items={props.items}
-                    active={url}/>
+        <AnimatePresence>
+            {props.isOpen &&
+            <DrawerContainer 
+            initial={drawerClosedStyle}
+            animate={drawerOpenStyle}
+            exit={drawerClosedStyle}
+            transition={drawerTransition}
+            color={props.color}>
+                <Style
+                value={{
+                    height: "50%",
+                    "& > *": {
+                        textAlign: "center"
+                    }
+                }}>
+                    <Flex flexDirection="column" justifyContent="space-around">
+                        <Items 
+                        color={props.color}
+                        onClick={props.onClose}
+                        items={props.items}
+                        active={url}/>
 
-                    <Padding py="s6">
-                        <Button color={buttonTheme}>
-                            Resume
-                        </Button>
-                    </Padding>
-                </Flex>
-            </Style>
-        </DrawerContainer>
+                        <Padding py="s6">
+                            <a
+                            href="Yousef_Abdulkarim_CV.pdf"
+                            style={{
+                                textDecoration: "none"
+                            }}>
+                                <Button color={buttonTheme}>
+                                    Resume
+                                </Button>
+                            </a>
+                        </Padding>
+                    </Flex>
+                </Style>
+            </DrawerContainer>}
+        </AnimatePresence>
     );
+    
 };
 
 export default Drawer;

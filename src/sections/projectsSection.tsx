@@ -4,77 +4,46 @@ import Layout from "../components/layout";
 
 import Projects from "../components/projects";
 
+import {
+    useStaticQuery,
+    graphql
+}
+from "gatsby";
 
 
-const projects = [
-    {
-        githubLink: "https://github.com/bchiang7/bchiang7.github.io",
-        projectLink: "https://brittanychiang.com/",
-        title: "Personal Website V3",
-        text: `
-        Third iteration of my personal website built with Jekyll and hosted on GitHub Pages.
-        `,
-        tech: [
-            "Jekyll",
-            "SCSS",
-            "JS"
-        ]
-    },
-    {
-        githubLink: "https://github.com/bchiang7/bchiang7.github.io",
-        projectLink: "https://brittanychiang.com/",
-        title: "Personal Website V3",
-        text: `
-        Third iteration of my personal website built with Jekyll and hosted on GitHub Pages.
-        `,
-        tech: [
-            "Jekyll",
-            "SCSS",
-            "JS"
-        ]
-    },
-    {
-        githubLink: "https://github.com/bchiang7/bchiang7.github.io",
-        projectLink: "https://brittanychiang.com/",
-        title: "Personal Website V3",
-        text: `
-        Third iteration of my personal website built with Jekyll and hosted on GitHub Pages.
-        `,
-        tech: [
-            "Jekyll",
-            "SCSS",
-            "JS"
-        ]
-    },
-    {
-        githubLink: "https://github.com/bchiang7/bchiang7.github.io",
-        projectLink: "https://brittanychiang.com/",
-        title: "Personal Website V3",
-        text: `
-        Third iteration of my personal website built with Jekyll and hosted on GitHub Pages.
-        `,
-        tech: [
-            "Jekyll",
-            "SCSS",
-            "JS"
-        ]
-    },
-    {
-        githubLink: "https://github.com/bchiang7/bchiang7.github.io",
-        projectLink: "https://brittanychiang.com/",
-        title: "Personal Website V3",
-        text: `
-        Third iteration of my personal website built with Jekyll and hosted on GitHub Pages.
-        `,
-        tech: [
-            "Jekyll",
-            "SCSS",
-            "JS"
-        ]
-    }
-];
 
 export const ProjectsSections = () => {
+    
+    const data = useStaticQuery(graphql`
+        {
+            projects: allMarkdownRemark(filter: {fileAbsolutePath: {regex: "/projects/"} }, sort: {fields: [frontmatter___date], order: DESC}) {
+                edges {
+                    node {
+                        frontmatter {
+                            title
+                            tech
+                            github
+                            external
+                        }
+                        html
+                    }
+                }
+            }
+        }
+    `).projects.edges;
+
+    const projects = (
+        data
+        .map(item => ({ ...item.node }))
+        .map(item => ({
+            title: item.frontmatter.title,
+            githubLink: item.frontmatter.github,
+            projectLink: item.frontmatter.external || undefined,
+            tech: item.frontmatter.tech,
+            text: (item.html as string).replace(/<p>/g, "").replace(/<\/p>/g, "")
+        }))
+    );
+
     return (
         <Layout.Section
         name="work"

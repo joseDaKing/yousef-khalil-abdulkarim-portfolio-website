@@ -25,11 +25,6 @@ import MediaQuery, {
 from "react-responsive";
 
 import {
-    navigate
-}
-from "@reach/router";
-
-import {
     Brand
 }
 from "../../typography";
@@ -54,6 +49,11 @@ import logoLightUrl from "../../../images/logo_light.svg";
 
 // @ts-ignore
 import logoBlueUrl from "../../../images/logo_blue.svg";
+
+import {
+    navigate
+}
+from "@reach/router";
 
 
 
@@ -167,9 +167,16 @@ const Navbar: React.FC<INavbarProps> = props => {
                 active={props.active}/>
                 
                 <Padding pl="s6">
-                    <Button color={buttonColor}>
-                        Resume
-                    </Button>
+                    <a 
+                    style={{
+                        textDecoration: "none"
+                    }}
+                    href="./Yousef_Abdulkarim_CV.pdf">
+                        <Button 
+                        color={buttonColor}>
+                            Resume
+                        </Button>
+                    </a>
                 </Padding>
             </MediaQuery>
             
