@@ -39,6 +39,9 @@ import {
 }
 from "framer-motion";
 
+// @ts-ignore
+import cvUrl from "../../../../static/Yousef_Abdulkarim_CV.pdf";
+
 
 
 const DrawerContainer = styled(motion.aside)<IColorTheme>(props => {
@@ -124,7 +127,7 @@ const Drawer: React.FC<IDrawerProps> = props => {
 
                         <Padding py="s6">
                             <a
-                            href="Yousef_Abdulkarim_CV.pdf"
+                            href={cvUrl}
                             style={{
                                 textDecoration: "none"
                             }}>

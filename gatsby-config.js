@@ -18,22 +18,22 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/logo_blue.svg`
+        icon: `static/logo_blue.svg`
       },
     },
     "gatsby-plugin-offline",
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
+        name: `content`,
+        path: `${__dirname}/content`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `content`,
-        path: `${__dirname}/content`,
+        name: `static`,
+        path: `${__dirname}/static`,
       },
     },
     "gatsby-transformer-remark",

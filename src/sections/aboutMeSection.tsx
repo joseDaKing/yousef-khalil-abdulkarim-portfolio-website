@@ -9,7 +9,7 @@ import Image from "../components/image";
 import MediaQuery from "react-responsive";
 
 // @ts-ignore
-import portfolioImageUrl from "../images/portfolio.jpg";
+import portfolioImageUrl from "../../static/portfolio.webp";
 
 import {
     Text

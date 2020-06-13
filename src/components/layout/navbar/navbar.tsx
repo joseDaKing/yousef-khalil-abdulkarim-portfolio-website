@@ -45,10 +45,13 @@ import Items, {
 from "./items";
 
 // @ts-ignore
-import logoLightUrl from "../../../images/logo_light.svg";
+import logoLightUrl from "../../../../static/logo_light.svg";
 
 // @ts-ignore
-import logoBlueUrl from "../../../images/logo_blue.svg";
+import logoBlueUrl from "../../../../static/logo_blue.svg";
+
+// @ts-ignore
+import cvUrl from "../../../../static/Yousef_Abdulkarim_CV.pdf";
 
 import {
     navigate
@@ -171,7 +174,7 @@ const Navbar: React.FC<INavbarProps> = props => {
                     style={{
                         textDecoration: "none"
                     }}
-                    href="./Yousef_Abdulkarim_CV.pdf">
+                    href={cvUrl}>
                         <Button 
                         color={buttonColor}>
                             Resume
