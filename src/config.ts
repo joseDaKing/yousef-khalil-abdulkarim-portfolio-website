@@ -13,9 +13,3 @@ export const GlobalStyles = createGlobalStyle({
         margin: 0
     }
 });
-
-export const navbarItems = [
-    "about",
-    "work",
-    "contact"
-];

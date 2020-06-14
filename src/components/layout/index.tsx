@@ -32,7 +32,8 @@ export interface ISection extends ISectionProps {
 }
 
 interface ILayoutProps {
-    sections: ISection[]
+    items: string[];
+    sections: ISection[];
 };
 
 const Layout: React.FC<ILayoutProps> = props => {
@@ -43,18 +44,12 @@ const Layout: React.FC<ILayoutProps> = props => {
 
     const sections = props.sections.sort((a, b) => a.index - b.index);
 
-    const navbarItems = (
-        sections
-        .filter(section => section.includeInNav ?? true)
-        .map(section => section.name)
-    );
-
     return (
         <ThemeProvider theme={{ breakpoints }}>
             <Navbar
             color="blue" 
             onDrawerButtonClick={toggleDrawerHandler}
-            items={navbarItems}/>
+            items={props.items}/>
 
             <MediaQuery 
             maxWidth={breakpoints.md}>
@@ -63,7 +58,7 @@ const Layout: React.FC<ILayoutProps> = props => {
                 color="dark"
                 onClose={toggleDrawerHandler}
                 isOpen={isDrawerOpen}
-                items={navbarItems}/>
+                items={props.items}/>
             </MediaQuery>
 
             

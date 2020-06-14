@@ -25,25 +25,33 @@ from "@reach/router";
 
 import {
     GlobalStyles,
-    navbarItems
 }
 from "../config";
+
+import * as sectionsComponents from "../sections/";
 
 
 
 const NotFoundPage = () => {
+
+    const items = (
+        Object
+        .values(sectionsComponents)
+        .map(section => section.name)
+    );
+    
     return (
         <React.Fragment>
             <Head/>
             <GlobalStyles/>
             <Layout 
-            items={navbarItems}>
-                <Layout.Section 
-                color="light">
-                    <Layout.Grid
-                    structure={[["box"]]}>
-                        <Layout.Box
-                        name="box">
+            items={items}
+            sections={[
+                {   index: 0,
+                    name: "404",
+                    color: "light",
+                    content: () => {
+                        return (
                             <Style
                             value={{
                                 height: `calc(100vh - ${47 + 96 + 160 + 67}px)`,
@@ -79,10 +87,10 @@ const NotFoundPage = () => {
                                     go back
                                 </Button>
                             </Style>
-                        </Layout.Box>
-                    </Layout.Grid>
-                </Layout.Section>
-            </Layout>
+                        );
+                    }
+                }
+            ]}/>
         </React.Fragment>
     );
 }
