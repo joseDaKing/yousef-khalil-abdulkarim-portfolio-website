@@ -28,69 +28,64 @@ import {
 }
 from "../config";
 
-import * as sectionsComponents from "../sections/";
+import {
+    getNavbarItems
+}
+from "../utilities";
 
 
 
 const NotFoundPage = () => {
-
-    const items = (
-        Object
-        .values(sectionsComponents)
-        .map(section => section.name)
-    );
-    
     return (
         <React.Fragment>
             <Head/>
             <GlobalStyles/>
             <Layout 
-            items={items}
-            sections={[
-                {   index: 0,
-                    name: "404",
-                    color: "light",
-                    content: () => {
-                        return (
-                            <Style
-                            value={{
-                                height: `calc(100vh - ${47 + 96 + 160 + 67}px)`,
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                alignContent: "center",
-                            }}>
-                                <Margin 
-                                mb="s5">                                    
-                                    <Display
-                                    align="center" 
-                                    color="blue">
-                                    404
-                                    </Display>
-                                </Margin>
-
-                                <Margin
-                                mb="s8">
-                                    <Title 
-                                    align="center"
-                                    color="dark"
-                                    transform="capitalize">
-                                        page not found
-                                    </Title>
-                                </Margin>
-
-                                <Button 
-                                onClick={() => navigate("/")}
-                                size="xl"
+            items={getNavbarItems()}
+            sections={[{
+                index: 0,
+                name: "404",
+                color: "light",
+                content: () => {
+                    return (
+                        <Style
+                        value={{
+                            height: `calc(100vh - ${47 + 96 + 160 + 67}px)`,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            alignContent: "center",
+                        }}>
+                            <Margin 
+                            mb="s5">                                    
+                                <Display
+                                align="center" 
                                 color="blue">
-                                    go back
-                                </Button>
-                            </Style>
-                        );
-                    }
-                }
-            ]}/>
+                                404
+                                </Display>
+                            </Margin>
+
+                            <Margin
+                            mb="s8">
+                                <Title 
+                                align="center"
+                                color="dark"
+                                transform="capitalize">
+                                    page not found
+                                </Title>
+                            </Margin>
+
+                            <Button 
+                            onClick={() => navigate("/")}
+                            size="xl"
+                            color="blue">
+                                go back
+                            </Button>
+                        </Style>
+                    );
+                }   
+            }]}/>
         </React.Fragment>
     );
 }

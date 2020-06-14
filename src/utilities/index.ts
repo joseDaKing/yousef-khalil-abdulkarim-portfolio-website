@@ -11,6 +11,8 @@ from "../theme";
 
 import color from "color";
 
+import * as sections from "../sections";
+
 
 
 export const defaultTransition = ({transition: "all 0.2s ease-in"});
@@ -112,4 +114,13 @@ export const applyColorProps = (colorStr: string, colorProps: IColorProps) => {
     }
 
     return colorStr;
+}
+
+export const getNavbarItems = () => {
+    return (
+        Object
+        .values(sections)
+        .filter(section => section.includeInNav ?? true)
+        .map(section => section.name)
+    );
 }

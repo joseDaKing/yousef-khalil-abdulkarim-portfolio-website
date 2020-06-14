@@ -2,7 +2,7 @@ import React from "react"
 
 import Layout from "../components/layout";
 
-import * as sectionsComponents from "../sections/";
+import * as sections from "../sections/";
 
 import Head from "../components/head";
 
@@ -11,19 +11,21 @@ import {
 }
 from "../config";
 
+import {
+    getNavbarItems
+}
+from "../utilities";
+
 
 
 const IndexPage = () => {
-    
-    const sections = Object.values(sectionsComponents);
-
     return (
         <React.Fragment>
             <GlobalStyles/>
             <Head/>
             <Layout 
-            items={sections.map(section => section.name)}
-            sections={sections}/>            
+            items={getNavbarItems()}
+            sections={Object.values(sections)}/>            
         </React.Fragment>
     );
 }
