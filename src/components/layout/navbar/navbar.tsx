@@ -61,6 +61,12 @@ from "@reach/router";
 import Fade from "react-reveal";
 
 
+import {
+    animateScroll
+}
+from "react-scroll"
+
+
 
 const getLogoUrl = (theme: IColorTheme["color"]) => {
     switch(theme) {
@@ -134,21 +140,17 @@ const Navbar: React.FC<INavbarProps> = props => {
 
     const navbarButton = navbarButtonTheme[props.color];
 
-    const buttonFadeInDelay = props.items.reduce(number => number + 1, 1) * 150;
-
-    console.log(buttonFadeInDelay);
+    const buttonFadeInDelay = (props.items.length + 1) * 150;
 
     return (
         <Container color={props.color}>
-            
             <Style 
-            onClick={() => navigate("/")}
+            onClick={() => animateScroll.scrollToTop()}
             value={{
                 cursor: "pointer",
                 position: "absolute",
                 left: 0,
-            }}>
-                
+            }}>    
                 <Flex 
                 justifyContent="center" 
                 alignItems="center">
@@ -177,8 +179,7 @@ const Navbar: React.FC<INavbarProps> = props => {
                 <Items
                 items={props.items}
                 onClick={() => {}}
-                color={props.color}
-                active={props.active}/>
+                color={props.color}/>
                 
                 <Padding pl="s6">
                     <a 

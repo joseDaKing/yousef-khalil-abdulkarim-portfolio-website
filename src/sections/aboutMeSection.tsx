@@ -1,7 +1,5 @@
 import React from "react"
 
-import Layout from "../components/layout";
-
 import List from "../components/list";
 
 import Image from "../components/image";
@@ -33,6 +31,17 @@ import {
 from "gatsby";
 
 import Fade from "react-reveal/Fade";
+
+import {
+    Grid,
+    Box
+}
+from "../components/grid";
+
+import {
+    ISection
+}
+from "../components/layout";
 
 
 
@@ -67,6 +76,7 @@ const TextSide: React.FC<{ data: any }> = props => {
         <React.Fragment>
             {elements.map((element, index) => (
                 <Fade
+                key={index}
                 bottom
                 delay={index * 100}>
                     {element}
@@ -88,66 +98,69 @@ const PortfolioSide = () => {
     );
 }
 
-export const AboutMeSection = () => {
+export const aboutMeSection: ISection = {
+    index: 1,
+    title: "about me",
+    name: "about",
+    color: "blue",
+    content: () => {
 
-    const data = useStaticQuery(graphql`
-        {
-            about: markdownRemark(fileAbsolutePath: {regex: "/about/"}) {
-                frontmatter {
-                    title
-                    skills1,
-                    skills2
+        const data = useStaticQuery(graphql`
+            {
+                about: markdownRemark(fileAbsolutePath: {regex: "/about/"}) {
+                    frontmatter {
+                        title
+                        skills1,
+                        skills2
+                    }
+                    html
                 }
-                html
             }
-        }
-    `).about;
+        `).about;
+    
+        return (
+            <React.Fragment>
+                <MediaQuery minWidth={breakpoints.md + 1}>
+                    <Grid 
+                    gapX="s6"
+                    gapY="s6" 
+                    structure={[
+                        ["textSide", "portfolioSide"],
+                    ]}>
+                        <Box 
+                        name="textSide">
+                            <TextSide 
+                            data={data}/>
+                        </Box>
 
-    return (
-        <Layout.Section
-        title="About me"
-        name="about" 
-        color="blue">
-            <MediaQuery minWidth={breakpoints.md + 1}>
-                <Layout.Grid 
-                gapX="s6"
-                gapY="s6" 
-                structure={[
-                    ["textSide", "portfolioSide"],
-                ]}>
-                    <Layout.Box 
-                    name="textSide">
-                        <TextSide 
-                        data={data}/>
-                    </Layout.Box>
+                        <Box 
+                        name="portfolioSide">
+                            <PortfolioSide/>
+                        </Box>
+                    </Grid>
+                </MediaQuery>
+                
+                <MediaQuery maxWidth={breakpoints.md}>
+                    <Grid 
+                    gapX="s6"
+                    gapY="s6" 
+                    structure={[
+                        ["portfolioSide"],
+                        ["textSide"],
+                    ]}>
+                        <Box 
+                        name="textSide">
+                            <TextSide 
+                            data={data}/>
+                        </Box>
 
-                    <Layout.Box 
-                    name="portfolioSide">
-                        <PortfolioSide/>
-                    </Layout.Box>
-                </Layout.Grid>
-            </MediaQuery>
-            
-            <MediaQuery maxWidth={breakpoints.md}>
-                <Layout.Grid 
-                gapX="s6"
-                gapY="s6" 
-                structure={[
-                    ["portfolioSide"],
-                    ["textSide"],
-                ]}>
-                    <Layout.Box 
-                    name="textSide">
-                        <TextSide 
-                        data={data}/>
-                    </Layout.Box>
-
-                    <Layout.Box 
-                    name="portfolioSide">
-                        <PortfolioSide/>
-                    </Layout.Box>
-                </Layout.Grid>
-            </MediaQuery>
-        </Layout.Section>
-    );
+                        <Box 
+                        name="portfolioSide">
+                            <PortfolioSide/>
+                        </Box>
+                    </Grid>
+                </MediaQuery>
+            </React.Fragment>    
+        );
+    }
 }

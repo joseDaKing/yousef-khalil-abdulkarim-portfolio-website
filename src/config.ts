@@ -3,11 +3,10 @@ import {
 } 
 from "styled-components";
 
-
+import 'intersection-observer'
 
 export const GlobalStyles = createGlobalStyle({
     ":root": {
-        scrollBehavior: "smooth",
         fontFamily: "roboto"
     },
     body: {

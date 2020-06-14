@@ -30,31 +30,32 @@ from "react-responsive";
 
 import Fade from "react-reveal/Fade";
 
+import {
+    Link
+}
+from "react-scroll"
+
 
 
 interface IItemProps extends IColorTheme {
     index: number;
-    active: boolean;
 }
 
-const Item = styled.a<IItemProps>(props => {
+const Item = styled.div<IItemProps>(props => {
 
     const componentThemeColors = {
         dark: {
-            color: props.active ? colors.black : colors.white,
-            backgroundColor: props.active ? colors.silverLight : "transparent",
+            color: colors.white,
             hoverColor: colors.black,
             hoverBackgroundColor: colors.silverDefault
         },
         blue: {
-            color: props.active ? colors.black : colors.white,
-            backgroundColor: props.active ? colors.silverDefault : "transparent",
+            color: colors.white,
             hoverColor: colors.black,
             hoverBackgroundColor: colors.silverDefault
         },
         light: {
-            color: props.active ? colors.white : colors.black,
-            backgroundColor: props.active ? colors.blueDefault : "transparent",
+            color: colors.black,
             hoverColor: colors.white,
             hoverBackgroundColor: colors.blueLight
         }
@@ -62,18 +63,17 @@ const Item = styled.a<IItemProps>(props => {
     
     const {
         color, 
-        backgroundColor,
         hoverColor,
         hoverBackgroundColor
     } = componentThemeColors[props.color];
 
     return {
+        cursor: "pointer",
         fontSize: 15,
         display: "block",
         textDecoration: "none",
         color,
         textTransform: "capitalize",
-        backgroundColor,
         letterSpacing: 1.6,
         ...defaultTransition,
         "&:hover": {
@@ -91,7 +91,6 @@ const Item = styled.a<IItemProps>(props => {
 
 export interface IItemsProps extends IColorTheme {
     items: string[];
-    active: string;
     onClick?: () => void;
 }
 
@@ -101,36 +100,35 @@ const Items: React.FC<IItemsProps> = props => {
         maxWidth: breakpoints.md
     });
 
+    
+
     return (
         <React.Fragment>
             {props.items.map((name, index) => {
 
-                const link = `#${name}`;
-
-                const isActive = props.active === link;
-
                 const item = (
-                    <Item 
-                    color={props.color}
-                    onClick={props.onClick}
-                    key={name}
-                    active={isActive}
-                    index={index + 1}
-                    href={link}>
-                        <Padding 
-                        px="s7" 
-                        py="s6">
-                            {name}
-                        </Padding>
-                    </Item>
+                    <Link 
+                    smooth
+                    to={name}
+                    key={name}>
+                        <Item 
+                        color={props.color}
+                        onClick={props.onClick}
+                        index={index + 1}>
+                            <Padding 
+                            px="s7" 
+                            py="s6">
+                                {name}
+                            </Padding>
+                        </Item>
+                    </Link>
                 );
 
                 if (tabletBreakpointDown) return item;
-
                 else return (
                     <Fade 
-                    key={name}
                     top 
+                    key={name}
                     delay={index * 150}>
                         {item}
                     </Fade>

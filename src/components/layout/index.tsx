@@ -18,56 +18,43 @@ import {
 }
 from "styled-components";
 
-import {
-    useLocation
+import Section, {
+    ISectionProps
+} 
+from "./section";
+
+
+
+export interface ISection extends ISectionProps {
+    content: React.FC;
+    index: number;
+    includeInNav?: boolean;
 }
-from "@reach/router";
 
-import {
-    IItemsProps
-}
-from "./navbar/items";
-
-import {
-    Grid,
-    Box
-}
-from "./grid";
-
-import Section from "./section";
-
-
-
-interface ILayoutProps extends Pick<IItemsProps, "items"> {
-    children: (
-        React.ReactElement<typeof Section>
-        | React.ReactElement<typeof Section>[]
-    );
+interface ILayoutProps {
+    sections: ISection[]
 };
 
-type LayoutType = React.FC<ILayoutProps> & { 
-    Section: typeof Section;
-    Grid: typeof Grid;
-    Box: typeof Box;
-};
-
-const Layout: LayoutType = props => {
-
-    const {
-        hash
-    } = useLocation();
+const Layout: React.FC<ILayoutProps> = props => {
 
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
     const toggleDrawerHandler = () => setIsDrawerOpen(prevValue => !prevValue);
+
+    const sections = props.sections.sort((a, b) => a.index - b.index);
+
+    const navbarItems = (
+        sections
+        .filter(section => section.includeInNav ?? true)
+        .map(section => section.name)
+    );
 
     return (
         <ThemeProvider theme={{ breakpoints }}>
             <Navbar
             color="blue" 
             onDrawerButtonClick={toggleDrawerHandler}
-            active={hash}
-            items={props.items}/>
+            items={navbarItems}/>
 
             <MediaQuery 
             maxWidth={breakpoints.md}>
@@ -76,21 +63,23 @@ const Layout: LayoutType = props => {
                 color="dark"
                 onClose={toggleDrawerHandler}
                 isOpen={isDrawerOpen}
-                active={hash}
-                items={props.items}/>
+                items={navbarItems}/>
             </MediaQuery>
 
-            {props.children}
+            
+            {sections.map((section, index) => (
+                <Section
+                key={section.name + index}
+                title={section.title}
+                color={section.color}
+                name={section.name}>
+                    <section.content/>
+                </Section>
+            ))}
 
             <Footer color="blue"/>
         </ThemeProvider>
     );
 }
-
-Layout.Section = Section;
-
-Layout.Grid = Grid;
-
-Layout.Box = Box;
 
 export default Layout;

@@ -1,6 +1,7 @@
 import React from "react";
 
 import styled, {
+    StyledComponent,
     CSSObject
 } 
 from "styled-components";
@@ -8,18 +9,18 @@ from "styled-components";
 import {
     getScaleValue
 }
-from "../../utilities";
+from "../utilities";
 
 import {
     LayoutSpacing,
     MicroSpacing
 }
-from "../../types";
+from "../types";
 
 import { 
     breakpoints 
 }
-from "../../theme";
+from "../theme";
 
 
 
@@ -45,7 +46,7 @@ interface IGridProps {
     );
 };
 
-export const Grid: React.FC<IGridProps> = styled.div<IGridProps>(props => {
+export const Grid = styled.div<IGridProps>(props => {
 
     const styles: CSSObject = {
         display: "grid",

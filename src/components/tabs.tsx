@@ -1,9 +1,6 @@
 import React from "react";
 
-import styled, { 
-    CSSObject 
-} 
-from "styled-components";
+import styled from "styled-components";
 
 import {
     defaultTransition
@@ -23,98 +20,38 @@ from "../theme";
 import Color from "color";
 
 import {
-    useMediaQuery    
-}
-from "react-responsive";
-
-import {
     down,
     up
 }
 from "styled-breakpoints";
 
-import {
-    breakpoints
-}
-from "../theme";
+import Fade from "react-reveal";
 
 
 
 interface ITabItemProps {
-    active: boolean,
-    mediaQuery: boolean
+    active: boolean;
 }
 
-const TabItem = styled.li<ITabItemProps>(props => {
-    
-    const styles: CSSObject = {
-        ...defaultTransition, 
-        cursor: "pointer",
-        textTransform: "capitalize",
-        fontWeight: 500,
-        letterSpacing: 1,
-        fontSize: 17,
-        position: "relative",
-        "&:hover": {
-            transitions: "inherit",
-            color: colors.blueDefault
-        },
-        "&::before": {
-            transition: "inherit",
-            content: `""`,
-            position: "absolute",
-            ...(() => {
-                let styles: CSSObject;
-
-                if (props.mediaQuery) {
-                    styles = {
-                        top: 0,
-                        bottom: 0,
-                        width: 2,
-                        transform: "translateX(-700%)"
-                    };
-    
-                }
-
-                else {
-                    styles = {
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        height: 2,
-                        transform: "translateY(200%)"
-                    }
-                }
-
-                return styles;
-            })(),
-        }
-    } as const;
-
-    if (props.active) {
-        
-        styles.color = colors.blueDefault;
-
-        (styles["&::before"] as CSSObject) = {
-            ...(styles["&::before"] as CSSObject),
-            transition: "inherit",
-            backgroundColor: colors.blueDefault,            
-            transform: "translateX(0%)"
-        }
-
-        styles.backgroundColor = (
-            Color(colors.blueDefault)
-            .alpha(0.25)
-            .string()
-        );
+const TabItem = styled.li<ITabItemProps>(props => ({
+    ...defaultTransition, 
+    cursor: "pointer",
+    textTransform: "capitalize",
+    fontWeight: 500,
+    letterSpacing: 1,
+    fontSize: 17,
+    position: "relative",
+    color: props.active ? colors.blueDefault : colors.grayDark,
+    backgroundColor: props.active ? (
+        Color(colors.blueDefault)
+        .alpha(0.25)
+        .string()
+    ) : "transparent",
+    "&:hover": {
+        ...defaultTransition,
+        color: colors.blueDefault
     }
-
-    else {
-        styles.color = colors.grayDark;
-    }
-
-    return styles;
-});
+}));
 
 const TabList = styled.ul(props => ({
     padding: 0,
@@ -158,13 +95,7 @@ const Tabs: React.FC<ITabsProps> = props => {
 
     const [active, setActive] = React.useState(props.active);
 
-    console.log("abra", props.items.filter(item => item.name === active)[0]);
-
     const Content = props.items.filter(item => item.name === active)[0].content;
-
-    const isMdWidth= useMediaQuery({
-        minWidth: breakpoints.md
-    });
 
     return (
         <TabsContainer>
@@ -183,7 +114,6 @@ const Tabs: React.FC<ITabsProps> = props => {
                         <TabItem
                         key={name + index}
                         onClick={onSetActiveHandler}
-                        mediaQuery={isMdWidth}
                         active={isActive}>
                             <Padding 
                             px="s5" 

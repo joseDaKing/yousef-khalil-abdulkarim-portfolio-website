@@ -33,18 +33,21 @@ from "../../../types";
 
 import Button from "../../button";
 
-import {
-    AnimatePresence,
-    motion
-}
-from "framer-motion";
-
 // @ts-ignore
 import cvUrl from "../../../../static/Yousef_Abdulkarim_CV.pdf";
 
+import {
+    defaultTransition
+}
+from "../../../utilities";
 
 
-const DrawerContainer = styled(motion.aside)<IColorTheme>(props => {
+
+interface IDrawerContainerProps extends IColorTheme {
+    open: boolean;
+}
+
+const DrawerContainer = styled.aside<IDrawerContainerProps>(props => {
 
     const colorTheme = {
         dark: colors.grayDark,
@@ -59,6 +62,10 @@ const DrawerContainer = styled(motion.aside)<IColorTheme>(props => {
         zIndex: 100,
         backgroundColor: color,
         right: 0,
+        transform: `translateX(${props.open ? "0%" : "100%"})`,
+        ...defaultTransition,
+        transitionDuration: "375ms",
+        transitionTimingFunction: "ease-out",
         [down("sm")(props)]: {
             width: "65%",
         },
@@ -86,60 +93,37 @@ const Drawer: React.FC<IDrawerProps> = props => {
 
     const buttonTheme = buttonThemes[props.color];
 
-    const drawerClosedStyle = {
-        transform: "translateX(100%)"
-    };
-
-    const drawerOpenStyle = {
-        transform: "translateX(0%)"
-    };
-
-    const drawerTransition = {
-        type: "spring",
-        damping: 20,
-        stiffness: 90
-    };
-
-    console.log(props.isOpen);
-
     return (
-        <AnimatePresence>
-            {props.isOpen &&
-            <DrawerContainer 
-            initial={drawerClosedStyle}
-            animate={drawerOpenStyle}
-            exit={drawerClosedStyle}
-            transition={drawerTransition}
-            color={props.color}>
-                <Style
-                value={{
-                    height: "50%",
-                    "& > *": {
-                        textAlign: "center"
-                    }
-                }}>
-                    <Flex flexDirection="column" justifyContent="space-around">
-                        <Items 
-                        color={props.color}
-                        onClick={props.onClose}
-                        items={props.items}
-                        active={url}/>
+        <DrawerContainer 
+        open={props.isOpen}
+        color={props.color}>
+            <Style
+            value={{
+                height: "50%",
+                "& > *": {
+                    textAlign: "center"
+                }
+            }}>
+                <Flex flexDirection="column" justifyContent="space-around">
+                    <Items 
+                    color={props.color}
+                    onClick={props.onClose}
+                    items={props.items}/>
 
-                        <Padding py="s6">
-                            <a
-                            href={cvUrl}
-                            style={{
-                                textDecoration: "none"
-                            }}>
-                                <Button color={buttonTheme}>
-                                    Resume
-                                </Button>
-                            </a>
-                        </Padding>
-                    </Flex>
-                </Style>
-            </DrawerContainer>}
-        </AnimatePresence>
+                    <Padding py="s6">
+                        <a
+                        href={cvUrl}
+                        style={{
+                            textDecoration: "none"
+                        }}>
+                            <Button color={buttonTheme}>
+                                Resume
+                            </Button>
+                        </a>
+                    </Padding>
+                </Flex>
+            </Style>
+        </DrawerContainer>
     );
     
 };

@@ -8,7 +8,6 @@ import Head from "../components/head";
 
 import {
     GlobalStyles,
-    navbarItems
 }
 from "../config";
 
@@ -19,14 +18,8 @@ const IndexPage = () => {
         <React.Fragment>
             <GlobalStyles/>
             <Head/>
-            <Layout
-            items={navbarItems}>
-                {Object
-                .values(sections).map(
-                    (Section, index) => 
-                        <Section key={index}/>
-                )}
-            </Layout>
+            <Layout 
+            sections={Object.values(sections)}/>            
         </React.Fragment>
     );
 }

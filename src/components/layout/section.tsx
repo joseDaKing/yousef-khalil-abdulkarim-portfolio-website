@@ -32,11 +32,6 @@ from "../../theme"
 
 import Color from "color";
 
-import {
-    Grid
-}
-from "./grid";
-
 import Fade from "react-reveal/Fade";
 
 
@@ -102,13 +97,9 @@ const TitleMargin = styled(Margin)<IColorTheme>(props => {
     };
 });
 
-interface ISectionProps extends IColorTheme {
+export interface ISectionProps extends IColorTheme {
     title?: string;
-    name?: string;
-    children: (
-        React.ReactElement
-        | React.ReactElement[] 
-    );
+    name: string;
 }
 
 const Section: React.FC<ISectionProps> = props => {
@@ -134,20 +125,17 @@ const Section: React.FC<ISectionProps> = props => {
         }
     } as const;
 
-    const backgroundColorProps = {
-        ...backgroundColorTheme[props.color],
-        id: props.name ?? ""
-    }
+    const backgroundColor = backgroundColorTheme[props.color];
 
     return (
         <BackgroundColor 
-        {...backgroundColorProps}>
+        id={props.name}
+        {...backgroundColor}>
             <Content>
                 <Padding
                 px="s5"
                 pt="l6"
                 pb="l7">
-
                     <Fade bottom>
                         {props.title &&
                         <TitleMargin 

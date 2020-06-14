@@ -36,9 +36,9 @@ const Projects: React.FC<IProjectsProps> = props => {
         <ProjectsContainer>
             {props.projects.map((project, index) => (
                 <Fade
+                key={index}
                 delay={index * 150}>
                     <Project 
-                    key={index}
                     color={props.color}
                     {...project}/>
                 </Fade>
