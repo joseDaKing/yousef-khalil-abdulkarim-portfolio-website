@@ -178,7 +178,8 @@ const Project: React.FC<IProjectProps> = props => {
                     </Text>
                 </Margin>
 
-                <Flex>
+                <Flex 
+                flexWrap="wrap">
                     {props.tech.map((text, index) => {
 
                         const isLastIndex = (props.tech.length - 1) === index;
